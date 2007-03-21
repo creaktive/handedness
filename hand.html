@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta content="text/html; charset=ISO-8859-1" http-equiv="content-type">
+  <title>Edinburgh/Oldfield</title>
+
+  <style type="text/css" media="all">
+    body {
+        font-family: Verdana, Tahoma;
+    }
+    .header {
+        font-weight: bold;
+        text-align: center;
+        vertical-align: bottom;
+        font-size: 1.1em;
+    }
+    .descr {
+        text-align: right;
+    }
+    .mark {
+        width: 16px;
+        text-align: center;
+    }
+    .radio {
+        width: 16px;
+        height: 16px;
+    }
+    .result {
+        font-size: 1.2em;
+    }
+  </style>
+
+  <script type="text/javascript">
+<!--
+var Lsum;
+var Rsum;
+var bad;
+
+function Selector(name) {
+    document.write("<input class='radio' name='" + name + "' value='-2' type='radio'><\/td>");
+    document.write("<td class='mark'><input class='radio' name='" + name + "' value='-1' type='radio'><\/td>");
+    document.write("<td class='mark'><input class='radio' name='" + name + "' value='0' type='radio'><\/td>");
+    document.write("<td class='mark'><input class='radio' name='" + name + "' value='+1' type='radio'><\/td>");
+    document.write("<td class='mark'><input class='radio' name='" + name + "' value='+2' type='radio'>");
+}
+
+function GetScore(type) {
+    var i;
+    var j;
+    j = document.formHand[type].length;
+    for (i = 0; i < j; i++) {
+        if (document.formHand[type][i].checked)
+            break;
+    }
+
+    if (i != j) {
+        var score = i - 2;
+        if (score < 0) {
+            Lsum += Math.abs(score);
+        } else if (score > 0) {
+            Rsum += score;
+        } else {
+            ++Lsum;
+            ++Rsum;
+        }
+    } else {
+        ++bad;
+    }
+}
+
+function Count() {
+    Lsum = 0;
+    Rsum = 0;
+    bad = 0;
+
+    GetScore('Writing');
+    GetScore('Drawing');
+    GetScore('Throwing');
+    GetScore('Scissors');
+    GetScore('Toothbrush');
+    GetScore('Knife');
+    GetScore('Spoon');
+    GetScore('Broom');
+    GetScore('Match');
+    GetScore('Box');
+
+    if (bad) {
+        alert("Por favor, marque todos os itens!");
+        return 0;
+    } else {
+        var total = (100 * ((Rsum - Lsum) / (Rsum + Lsum)));
+        document.formHand.total.value = Math.round(total * 100) / 100;
+        return 1;
+    }
+}
+// -->
+  </script>
+
+</head>
+
+<body>
+<form name="formHand" action="" method="POST">
+<table align="center" border="1" cellpadding="2" cellspacing="2" summary="">
+  <tbody>
+    <tr>
+      <th class="header">M&atilde;o utilizada para:</th>
+      <th class="header"><img src="1.png" width="16" height="170" border="0" alt="exclusivamente esquerda"></th>
+      <th class="header"><img src="2.png" width="16" height="170" border="0" alt="esquerda (às vezes direita)"></th>
+      <th class="header"><img src="3.png" width="16" height="170" border="0" alt="tanto faz"></th>
+      <th class="header"><img src="4.png" width="16" height="170" border="0" alt="direita (às vezes esquerda)"></th>
+      <th class="header"><img src="5.png" width="16" height="170" border="0" alt="exclusivamente direita"></th>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Escrever:</td>
+      <td class="mark"><script type="text/javascript">Selector('Writing');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Desenhar:</td>
+      <td class="mark"><script type="text/javascript">Selector('Drawing');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Arremessar:</td>
+      <td class="mark"><script type="text/javascript">Selector('Throwing');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Tesoura:</td>
+      <td class="mark"><script type="text/javascript">Selector('Scissors');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Escova de dentes:</td>
+      <td class="mark"><script type="text/javascript">Selector('Toothbrush');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Faca (sem garfo):</td>
+      <td class="mark"><script type="text/javascript">Selector('Knife');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Colher:</td>
+      <td class="mark"><script type="text/javascript">Selector('Spoon');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Vassoura (m&atilde;o de cima):</td>
+      <td class="mark"><script type="text/javascript">Selector('Broom');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Acender f&oacute;sforo (mão que segura o f&oacute;sforo):</td>
+      <td class="mark"><script type="text/javascript">Selector('Match');</script></td>
+    </tr>
+
+    <tr>
+      <td nowrap="nowrap" class="descr">Abrir caixa (tampa):</td>
+      <td class="mark"><script type="text/javascript">Selector('Box');</script></td>
+    </tr>
+
+    <tr>
+      <td class="header" colspan="6">
+        <input class="result" value="Computar:" type="button" onclick="return Count()">
+        <input class="result" value="" type="text" size="6" readonly name="total">
+        <input class="result" value="Reiniciar" type="reset">
+      </td>
+    </tr>
+    
+  </tbody>
+</table>
+</form>
+</body>
+</html>
